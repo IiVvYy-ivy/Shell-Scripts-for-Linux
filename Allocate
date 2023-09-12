@@ -13,21 +13,21 @@ sudo cp docker-compose.yaml .env /dir3
 
 echo "The script executed successfully"
 echo 
-echo "copy nodes,clef and password to the corresponding folder"
+echo "copy folder1,folder2 and folder3 to the corresponding folder"
 
 cd /
 cd dir1 || exit
 
 for ((i=num1; i<=num2; i++))
 do
-sudo cp -r bee-$i /dir2
+sudo cp -r folder1-$i /dir2
 done
-sudo cp -r clef password /dir2
+sudo cp -r folder2 folder3 /dir2
 
 for ((j=num3; j<=num4; j++))
 do
-sudo cp -r bee-$j /dir3
+sudo cp -r folder1-$j /dir3
 done
-sudo cp -r clef password /dir3
+sudo cp -r folder2 folder3 /dir3
 
 echo "The script executed successfully"
