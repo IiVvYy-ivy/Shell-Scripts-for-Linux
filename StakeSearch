@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "请输入初始端口 x："
+echo "Please input start port x："
 read x
 
-echo "请输入末尾端口 y："
+echo "Please input end port y："
 read y
 
 echo
@@ -12,10 +12,10 @@ while [ $x -le $y ]
 do
     echo "x = $x" 
     cmd="curl localhost:$x/stake"
-    echo "执行命令：$cmd" 
+    echo "Execute command：$cmd" 
     sleep 10 
     x=$((x + 3))
     result=$(eval $cmd) 
 
 done 
-echo "质押查询完成"
+echo "Stake search complete"
