@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo "Please input start interface x："
+read x
+
+echo "Please input end interface y："
+read y
+
+output_file="reward_results.txt"
+echo
+echo
+while [ $x -le $y ]
+do
+    echo "x = $x" > /dev/null
+    cmd="sudo  curl -s -X GET http://localhost:$x/redistributionstate | jq"
+    echo "Execute command：$cmd" > /dev/null
+    result=$(eval $cmd) > /dev/null
+    x=$((x + 3))
+    reward=reward=$(echo "$result" | grep -o '"reward": *"[0-9]*"' | sed 's/"reward": *"\([0-9]*\)"/\1/')
+    if [ "$reward" = "0" ]
+    then
+        echo "$x sync complete" > /dev/null
+    else
+        echo "$(echo)" >> "$output_file"
+        echo "$x sync not complete " >> "$output_file"
+    fi
+done > "$output_file" 2>&1
+echo "Search complete"
