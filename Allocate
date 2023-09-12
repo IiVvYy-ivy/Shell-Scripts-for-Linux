@@ -1,0 +1,33 @@
+# This allocate.sh is designed to help us assign different folders and their subfiles (folders) to different directories
+
+
+#!/bin/bash
+
+echo "copy docker-compose.yaml and .env to dir1&dir2&dir3"
+
+cd dir || exit  # 'dir' is the directory where the docker-compose.yaml and .env to be copied is located
+
+sudo cp docker-compose.yaml .env /dir1
+sudo cp docker-compose.yaml .env /dir2
+sudo cp docker-compose.yaml .env /dir3
+
+echo "The script executed successfully"
+echo 
+echo "copy nodes,clef and password to the corresponding folder"
+
+cd /
+cd dir1 || exit
+
+for ((i=num1; i<=num2; i++))
+do
+sudo cp -r bee-$i /dir2
+done
+sudo cp -r clef password /dir2
+
+for ((j=num3; j<=num4; j++))
+do
+sudo cp -r bee-$j /dir3
+done
+sudo cp -r clef password /dir3
+
+echo "The script executed successfully"
