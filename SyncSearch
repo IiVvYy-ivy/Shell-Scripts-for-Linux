@@ -1,0 +1,30 @@
+#!/bin/bash
+
+echo "请输入初始端口 x："
+read x
+
+echo "请输入末尾端口 y："
+read y
+
+output_file="syncresults.txt"
+
+> syncresults.txt
+
+echo
+echo
+while [ $x -le $y ]
+do
+    echo "x = $x" > /dev/null
+    cmd="sudo  curl -s -X GET http://localhost:$x/redistributionstate | jq"
+    echo "执行命令：$cmd" > /dev/null
+    result=$(eval $cmd) > /dev/null
+    isFullySynced=$(echo "$result" | grep -o '"isFullySynced": *[^,}]*' | awk '{print $2}')
+    if [ "$isFullySynced" = "true" ]
+    then
+        echo "$x 同步完成" >> "$output_file"
+    else
+        echo "$x 未同步完成 " >> "$output_file"
+    fi
+    x=$((x+3))
+done > "$output_file" 2>&1
+echo "查询完成"
