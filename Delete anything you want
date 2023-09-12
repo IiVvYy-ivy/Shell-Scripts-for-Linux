@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd ~
+cd dir || exit
+
+for ((i=num1; i<=num2; i++))
+do
+  folder="name-$i"
+  if [ -d "$folder" ]; then
+    sudo rm -rf "$folder/folder or file"
+  fi
+done
