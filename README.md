@@ -1,3 +1,1 @@
-# Shell-Scripts-for-Linux
-Some scripts for Linux O&amp;M
-
+Design for printing all files in your destination dir
