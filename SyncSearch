@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "请输入初始端口 x："
+echo "Please input start port x："
 read x
 
-echo "请输入末尾端口 y："
+echo "Please input end port y："
 read y
 
 output_file="syncresults.txt"
@@ -16,15 +16,15 @@ while [ $x -le $y ]
 do
     echo "x = $x" > /dev/null
     cmd="sudo  curl -s -X GET http://localhost:$x/redistributionstate | jq"
-    echo "执行命令：$cmd" > /dev/null
+    echo "Execute command：$cmd" > /dev/null
     result=$(eval $cmd) > /dev/null
     isFullySynced=$(echo "$result" | grep -o '"isFullySynced": *[^,}]*' | awk '{print $2}')
     if [ "$isFullySynced" = "true" ]
     then
-        echo "$x 同步完成" >> "$output_file"
+        echo "$x sync complete" >> "$output_file"
     else
-        echo "$x 未同步完成 " >> "$output_file"
+        echo "$x sync not complete" >> "$output_file"
     fi
     x=$((x+3))
 done > "$output_file" 2>&1
-echo "查询完成"
+echo "sync search complete"
