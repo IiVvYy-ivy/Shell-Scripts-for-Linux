@@ -1,0 +1,29 @@
+#This CPUSORT.sh is designed to display the top 10 docker containers with the highest CPU usage
+
+
+#!/bin/bash
+
+top_output=$(top -b -n 1 -o %CPU | head -n 17)
+cpu_processes=$(echo "$top_output" |tail -n 10| awk '{print $1}')
+echo "$top_output"
+echo
+echo "$cpu_processes"
+echo
+docker_containers=$(docker ps -aq)
+
+counter=0
+for container_id in $docker_containers; do
+  container_info=$(docker inspect --format '{{.Name}}' $container_id)
+  container_name=$(echo $container_info | sed 's,^/,,')
+  container_processes=$(docker inspect --format '{{.State.Pid}}' $container_id)
+
+  for pid in $container_processes; do
+    if [[ "$cpu_processes" =~ "$pid" ]]; then
+      echo "Container Name: $container_name, Container ID: $container_id, PID: $pid"
+      ((counter++))
+      if [ $counter -eq 10 ]; then
+        break 2
+      fi
+    fi
+  done
+done
