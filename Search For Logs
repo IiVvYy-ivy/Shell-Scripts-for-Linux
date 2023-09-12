@@ -1,0 +1,24 @@
+# Assume docker containers' name is like name1_name2-index_1
+
+
+#!/bin/bash
+
+read -p "Please input start index： " x
+read -p "Please input end index： " y
+read -p "Please input name1: " z
+output_file="logs.txt"
+
+> "$output_file"
+
+time=$(date "+%Y-%m-%d %H:%M:%S")
+echo "Current time is:$time" >> "$output_file"
+echo
+for ((i=$x;i<=$y;i++));do
+	containername="name1${z}_name2-${i}_1"
+	echo "Current containers searched:$containername"
+	echo
+	cmd="sudo docker logs --tail 20 $containername"
+	echo "执行命令：$cmd" > /dev/null
+	result=$(eval $cmd) > /dev/null
+	echo "$result"
+done >> "$output_file"
