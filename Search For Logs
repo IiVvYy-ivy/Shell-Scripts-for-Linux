@@ -18,7 +18,7 @@ for ((i=$x;i<=$y;i++));do
 	echo "Current containers searched:$containername"
 	echo
 	cmd="sudo docker logs --tail 20 $containername"
-	echo "执行命令：$cmd" > /dev/null
+	echo "Execute command：$cmd" > /dev/null
 	result=$(eval $cmd) > /dev/null
 	echo "$result"
 done >> "$output_file"
